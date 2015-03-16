@@ -1,5 +1,5 @@
-# D3's Data Binding
+# PI Clock
 
-An Interactive Explanation of D3's Data Binding
+A clock, decorated by Math.PI
 
-See [demo](http://kristw.github.io/d3-data-binding/)
+See [demo](http://kristw.github.io/pi-clock/)
