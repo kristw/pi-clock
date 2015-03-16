@@ -15,9 +15,21 @@ var centerY = canvas.clientHeight/2;
 
 var color = d3.scale.category10();
 
+var counter;
+
+function resetCounter(){
+  counter = [];
+  for(var i=0;i<10;i++){
+    counter.push(0);
+  }
+}
+
+resetCounter();
+
 d3.text('data/pi1000000.txt', function(pi){
   function piNth(i){
-    return i>0 ? pi[i+1] : pi[i];
+    i = i%1000000;
+    return i>0 ? +pi[i+1] : +pi[i];
   }
 
   for(var i=10;i>0;i--){
@@ -31,10 +43,12 @@ d3.text('data/pi1000000.txt', function(pi){
 
   function draw(i){
     var digit = piNth(i);
+    counter[digit]++;
 
     // var angle = i * 6;
     // var r = stepSize * digit;
 
+    var hour = Math.floor(i/3600);
     var minute = Math.floor(i/(60));
     var angle = minute * 6;
     var r = (i%60) / 60 * 300;
@@ -84,13 +98,24 @@ d3.text('data/pi1000000.txt', function(pi){
   //   draw(j);
   // }
 
-  var now = new Date();
-  var i= now.getHours()*3600+ now.getMinutes() * 60 + now.getSeconds();
   window.setInterval(function(){
+    var now = new Date();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    var formatDate = d3.time.format('%H:%M:%S');
+    var i= hour*3600+ minute * 60 + second;
+    var digit = piNth(i);
 
     draw(i);
+    d3.select('#pi-text').text(
+      'Current local time: '+
+      formatDate(now) + ' '+
+      '= '+ i +' seconds since midnight => PI\'s '+ i + 'th digit is '
+      + digit
+    );
     i++;
-  }, 10);
+  }, 1000);
 
 });
 
