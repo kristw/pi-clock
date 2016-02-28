@@ -1,5 +1,5 @@
 {
-  "version": "0.0.0",
+  "version": "0.0.1",
   "name": "pi-clock",
   "devDependencies": {
     "apache-server-configs": "^2.7.1",
@@ -30,7 +30,7 @@
   "engines": {
     "node": ">=0.10.0"
   },
-  "scripts":{
+  "scripts": {
     "preversion": "npm test",
     "postversion": "git push && git push --tags"
   }
